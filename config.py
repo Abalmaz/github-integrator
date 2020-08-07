@@ -1,4 +1,4 @@
-import importlib
+from importlib import machinery
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -8,8 +8,7 @@ try:
 except KeyError:
     raise RuntimeError("Could not find 'SECRETS_PATH' in environment")
 else:
-    secrets = importlib.machinery.SourceFileLoader("secrets",
-                                                   _secrets_path).load_module()
+    secrets = machinery.SourceFileLoader("secrets", _secrets_path).load_module()
 
 
 def get_val(key, default=None):
@@ -25,7 +24,7 @@ def get_val(key, default=None):
 
 
 class Config(object):
-    DEBUG = False
+    STAGE = False
     TESTING = False
     CSRF_ENABLED = True
     SECRET_KEY = get_val("SECRET_KEY")
@@ -37,12 +36,13 @@ class Config(object):
 
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
-    DEBUG = True
+    DEBUG = False
 
 
 class TestingConfig(Config):
     SQLALCHEMY_DATABASE_URI = get_val("SQL_TEST_DATABASE_URI")
     TESTING = True
+    DEBUG = False
 
 
 class ProductionConfig(Config):
