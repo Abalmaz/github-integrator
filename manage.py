@@ -1,5 +1,6 @@
 from flask_script import Manager
 from flask_migrate import MigrateCommand
+from github_integration import models
 
 
 from github_integration import create_app, db
