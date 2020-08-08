@@ -1,7 +1,5 @@
-import jwt
-
-from config import get_val
 from github_integration import db
+from itsdangerous import encoding
 
 
 class User(db.Model):
@@ -13,11 +11,12 @@ class User(db.Model):
     github_login = db.Column(db.String(255))
     admin = db.Column(db.Boolean, nullable=False, default=False)
 
-    def __init__(self, github_access_token):
-        self.github_access_token = jwt.encode(
-            github_access_token, get_val("SECRET_KEY"),
-            algorithm='HS256'
-        )
+    def __init__(self, github_access_token, github_id, github_login):
+        self.github_access_token = encoding.base64_encode(
+            github_access_token
+        ),
+        self.github_id = github_id,
+        self.github_login = github_login
 
     def save(self):
         db.session.add(self)
@@ -25,8 +24,4 @@ class User(db.Model):
 
     @staticmethod
     def decode_auth_token(auth_token):
-        try:
-            token = jwt.decode(auth_token, get_val("SECRET_KEY"))
-            return token['sub']
-        except jwt.InvalidTokenError:
-            return 'Invalid token. Please log in again.'
+        return encoding.base64_encode(auth_token)

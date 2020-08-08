@@ -20,6 +20,9 @@ def create_app(config=None):
     db.init_app(app)
     migrate.init_app(app, db, directory=app.config["MIGRATE_FOLDER"])
 
+    from github_integration.auth.routes import auth
+    app.register_blueprint(auth)
+
     return app
 
 
