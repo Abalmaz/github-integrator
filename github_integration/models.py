@@ -11,7 +11,7 @@ class User(db.Model):
     github_login = db.Column(db.String(255))
     admin = db.Column(db.Boolean, nullable=False, default=False)
 
-    def __init__(self, github_access_token, github_id, github_login):
+    def __init__(self, github_access_token, github_id=None, github_login=None):
         self.github_access_token = encoding.base64_encode(
             github_access_token
         ),

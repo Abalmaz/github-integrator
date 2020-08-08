@@ -1,12 +1,15 @@
 from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_github import GitHub
 
 
 db = SQLAlchemy()
 
 # The migrate handler
 migrate = Migrate()
+
+github = GitHub()
 
 
 def create_app(config=None):
@@ -19,6 +22,7 @@ def create_app(config=None):
 
     db.init_app(app)
     migrate.init_app(app, db, directory=app.config["MIGRATE_FOLDER"])
+    github.init_app(app)
 
     from github_integration.auth.routes import auth
     app.register_blueprint(auth)

@@ -32,6 +32,8 @@ class Config(object):
 
     # The folder where the migrations are placed.
     MIGRATE_FOLDER = get_val("MIGRATE_FOLDER")
+    GITHUB_CLIENT_ID = get_val("GITHUB_CLIENT_ID")
+    GITHUB_CLIENT_SECRET = get_val("GITHUB_CLIENT_SECRET")
 
 
 class DevelopmentConfig(Config):
