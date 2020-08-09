@@ -7,7 +7,7 @@ from github_integration.models import User
 auth = Blueprint('auth', __name__)
 
 
-@auth.route("/auth/personal_token", methods=["POST"])
+@auth.route("/oauth/access_token", methods=["POST"])
 def personal_token_auth():
     post_data = request.get_json(force=True)
     personal_token = post_data['personal_token']
@@ -22,12 +22,9 @@ def personal_token_auth():
     return "", 200
 
 
-@auth.route('/oauth')
-def login():
-    if db.session.get('user_id', None) is None:
-        return github.authorize()
-    else:
-        return 'Already logged in'
+@auth.route("/oauth")
+def github_oauth():
+    return github.authorize()
 
 
 @auth.route('/oauth/github-callback')

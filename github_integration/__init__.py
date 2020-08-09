@@ -3,6 +3,8 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_github import GitHub
 
+from flask_swagger_ui import get_swaggerui_blueprint
+
 
 db = SQLAlchemy()
 
@@ -10,6 +12,17 @@ db = SQLAlchemy()
 migrate = Migrate()
 
 github = GitHub()
+
+### swagger specific ###
+SWAGGER_URL = '/docs'
+API_URL = '/static/swagger.yaml'
+SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "GitHub integration"
+    }
+)
 
 
 def create_app(config=None):
@@ -26,6 +39,7 @@ def create_app(config=None):
 
     from github_integration.auth.routes import auth
     app.register_blueprint(auth)
+    app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
 
     return app
 
