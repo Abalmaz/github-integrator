@@ -18,7 +18,8 @@ def personal_token_auth():
         user = User(github_access_token=personal_token,
                     github_id=user_github_id,
                     github_login=user_github_login)
-        user.save()
+        db.session.add(user)
+        db.session.commit()
     return "", 200
 
 

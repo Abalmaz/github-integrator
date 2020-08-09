@@ -1,5 +1,4 @@
-from github_integration import db
-from itsdangerous import encoding
+from github_integration import db, encryption_type
 
 
 class User(db.Model):
@@ -12,16 +11,15 @@ class User(db.Model):
     admin = db.Column(db.Boolean, nullable=False, default=False)
 
     def __init__(self, github_access_token, github_id=None, github_login=None):
-        self.github_access_token = encoding.base64_encode(
-            github_access_token
-        ),
+        self.github_access_token = encryption_type.encrypt(github_access_token.encode('ascii')).decode('ascii'),
         self.github_id = github_id,
         self.github_login = github_login
+        print(self.github_access_token)
 
     def save(self):
         db.session.add(self)
         db.session.commit()
 
     @staticmethod
-    def decode_auth_token(auth_token):
-        return encoding.base64_encode(auth_token)
+    def decode_personal_token(access_token):
+        return encryption_type.decrypt(access_token.encode('ascii')).decode('ascii')

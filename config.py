@@ -27,6 +27,7 @@ class Config(object):
     STAGE = False
     TESTING = False
     CSRF_ENABLED = True
+    DEBUG = False
     SECRET_KEY = get_val("SECRET_KEY")
     SQLALCHEMY_DATABASE_URI = get_val("SQL_DATABASE_URI")
 
@@ -38,13 +39,13 @@ class Config(object):
 
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
-    DEBUG = False
+    DEBUG = True
 
 
 class TestingConfig(Config):
     SQLALCHEMY_DATABASE_URI = get_val("SQL_TEST_DATABASE_URI")
     TESTING = True
-    DEBUG = False
+    DEBUG = True
 
 
 class ProductionConfig(Config):

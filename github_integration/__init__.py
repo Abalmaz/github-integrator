@@ -3,8 +3,12 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_github import GitHub
 
+from cryptography.fernet import Fernet
+
 from flask_swagger_ui import get_swaggerui_blueprint
 
+key = Fernet.generate_key()
+encryption_type = Fernet(key)
 
 db = SQLAlchemy()
 

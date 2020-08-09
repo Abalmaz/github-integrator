@@ -1,4 +1,5 @@
 import requests
+import base64
 from flask import abort, Response
 
 from github_integration.auth.constance import REQUIRED_SCOPES
@@ -66,4 +67,3 @@ def get_github_user(user_token):
 
     if is_json_response(response):
         return response.json()
-
