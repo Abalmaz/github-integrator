@@ -3,6 +3,15 @@ from github_integration.utils import encrypt_personal_token
 
 
 class User(db.Model):
+    """
+        The user table.
+        Attributes:
+            id (int): User unique identifier
+            github_access_users (str): The GitHub personal access token(encrypted).
+            github_id (int): The GitHub user's id.
+            github_login (str): The GitHub user's login.
+            admin (bool): User's role. If user is admin set it True
+        """
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)

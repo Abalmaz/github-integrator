@@ -9,7 +9,7 @@ from cryptography.fernet import Fernet
 
 from flask_swagger_ui import get_swaggerui_blueprint
 
-key = os.environ.get("FERNET_KEY")
+key = os.environ.get("SECRET_KEY")
 encryption_type = Fernet(key.encode('utf-8'))
 
 db = SQLAlchemy()
