@@ -1,7 +1,13 @@
+import os
+import sys
+
 from flask_swagger_ui import get_swaggerui_blueprint
 
 from github_integration import create_app
 from github_integration.auth.views import auth
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+sys.path.insert(0, basedir)
 
 app = create_app()
 

@@ -2,6 +2,7 @@ import requests
 from flask import abort, Response
 
 from github_integration import encryption_type
+from github_integration.auth.constants import REQUIRED_SCOPES
 
 
 class GitHubError(Exception):
@@ -45,13 +46,12 @@ def is_valid_github_token(personal_token: str) -> bool:
     }
     response = requests.request("GET", url, headers=headers)
     if is_valid_response(response):
-        return True
-        # scopes = response.headers.get('X-OAuth-Scopes')
-        # user_scopes = set(scopes.split(', '))
-        # if is_set_includes_all_from_another(user_scopes, REQUIRED_SCOPES):
-        #     return True
-        # else:
-        #     abort(Response("Token doesn't have enough scopes"))
+        scopes = response.headers.get('X-OAuth-Scopes')
+        user_scopes = set(scopes.split(', '))
+        if is_set_includes_all_from_another(user_scopes, REQUIRED_SCOPES):
+            return True
+        else:
+            abort(Response("Token doesn't have required scopes"))
     else:
         abort(Response("Token is not valid"))
     return False
@@ -74,11 +74,11 @@ def get_github_user(user_token: str) -> Response:
 
 def encrypt_personal_token(personal_token: str) -> str:
     return encryption_type.encrypt(
-        personal_token.encode('utf-8')
-    ).decode('utf-8', 'ignore')
+        personal_token.encode()
+    )
 
 
 def decode_personal_token(personal_token: str) -> str:
     return encryption_type.decrypt(
-        personal_token.encode('utf-8')
-    ).decode('utf-8', 'ignore')
+        personal_token
+    ).decode()

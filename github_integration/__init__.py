@@ -9,7 +9,7 @@ from cryptography.fernet import Fernet
 
 
 key = os.environ.get("SECRET_KEY")
-encryption_type = Fernet(key.encode('utf-8'))
+encryption_type = Fernet(key)
 
 db = SQLAlchemy()
 

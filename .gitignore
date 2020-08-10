@@ -93,7 +93,6 @@ target/
 .project
 .elasticbeanstalk/
 logs/
-secrets.py
 .idea/
 tmp/
 fabfile.py
@@ -101,3 +100,4 @@ fabfile.py
 dump\.rdb
 *.retry
 env.sh
+.flake8

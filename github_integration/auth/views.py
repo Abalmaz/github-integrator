@@ -5,9 +5,8 @@ from flask.views import MethodView
 from github_integration import db, github
 from github_integration.auth.constants import REQUIRED_SCOPES
 from github_integration.auth.utils import is_valid_github_token, \
-    get_github_user
+    get_github_user, encrypt_personal_token
 from github_integration.auth.models import GitHubUser
-from github_integration.auth.utils import encrypt_personal_token
 
 
 auth = Blueprint('auth', __name__)
@@ -22,8 +21,6 @@ class PersonalTokenAuth(MethodView):
         post_data = request.get_json()
         try:
             github_personal_token = post_data.get('personal_token')
-            print("Personal token: {github_personal_token}")
-            print(github_personal_token)
             if is_valid_github_token(github_personal_token):
                 return redirect(
                     url_for('auth.authorized',
