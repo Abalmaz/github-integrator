@@ -7,7 +7,6 @@ from flask_github import GitHub
 
 from cryptography.fernet import Fernet
 
-from flask_swagger_ui import get_swaggerui_blueprint
 
 key = os.environ.get("SECRET_KEY")
 encryption_type = Fernet(key.encode('utf-8'))
@@ -18,17 +17,6 @@ db = SQLAlchemy()
 migrate = Migrate()
 
 github = GitHub()
-
-# swagger specific
-SWAGGER_URL = '/docs'
-API_URL = '/static/swagger.yaml'
-SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
-    SWAGGER_URL,
-    API_URL,
-    config={
-        'app_name': "GitHub integration"
-    }
-)
 
 
 def create_app(config=None):
@@ -42,10 +30,6 @@ def create_app(config=None):
     db.init_app(app)
     migrate.init_app(app, db, directory=app.config["MIGRATE_FOLDER"])
     github.init_app(app)
-
-    from github_integration.auth.routes import auth
-    app.register_blueprint(auth)
-    app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
 
     return app
 
