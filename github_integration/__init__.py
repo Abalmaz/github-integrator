@@ -17,7 +17,7 @@ migrate = Migrate()
 
 github = GitHub()
 
-### swagger specific ###
+# swagger specific
 SWAGGER_URL = '/docs'
 API_URL = '/static/swagger.yaml'
 SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
@@ -65,13 +65,10 @@ def get_config_obj(config):
         "testing": "config.TestingConfig"
     }
 
-    # If no config, try to find one
     if not config:
         try:
             config = get_val("APP_SETTINGS")
         except KeyError as e:
-            # Raise exception if the setting can't be
-            # found in the environment or in the secrets file.
             raise RuntimeError(
                 "APP_SETTINGS is not defined in the settings") from e
 

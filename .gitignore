@@ -96,7 +96,6 @@ logs/
 secrets.py
 .idea/
 tmp/
-migrations/
 fabfile.py
 .git
 dump\.rdb

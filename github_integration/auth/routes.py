@@ -1,7 +1,8 @@
-from flask import request, Blueprint, jsonify, redirect, url_for, g
+from flask import request, Blueprint, redirect, url_for, g
 
 from github_integration import github, db
-from github_integration.auth.utils import is_valid_github_token, get_github_user
+from github_integration.auth.utils import is_valid_github_token, \
+    get_github_user
 from github_integration.models import User
 
 auth = Blueprint('auth', __name__)
@@ -59,7 +60,6 @@ def authorized(access_token):
 def logout():
     db.session.pop('user_id', None)
     return redirect(url_for('/oauth'))
-
 
 # @auth.route('/user')
 # def user():

@@ -1,0 +1,27 @@
+[flake8]
+max-line-length = 79
+exclude =
+    .git,
+    __pycache__,
+    .env,
+    alembic,
+    webinterface/sources/tags.py,
+    entrypoints/cleaner.py,
+    entrypoints/dispatcher.py,
+    entrypoints/processor.py,
+    entrypoints/router.py,
+    tests/,
+    common/config.py,
+    common/helper.py
+    common/rule_evaluation.py,
+    common/monitor.py,
+    dispatch/status.py,
+    dispatch/send.py,
+    routing/route_studies.py,
+    routing/route_series.py,
+    routing/generate_taskfile.py,
+    process/process_series.py
+ignore =
+    H306,  # Imports not in alphabetical order
+    D101,  # Missing docstring in public class
+    W503,  # Line break before binary operator - deprecated

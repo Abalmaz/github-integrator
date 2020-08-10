@@ -8,7 +8,8 @@ try:
 except KeyError:
     raise RuntimeError("Could not find 'SECRETS_PATH' in environment")
 else:
-    secrets = machinery.SourceFileLoader("secrets", _secrets_path).load_module()
+    secrets = machinery.SourceFileLoader("secrets",
+                                         _secrets_path).load_module()
 
 
 def get_val(key, default=None):

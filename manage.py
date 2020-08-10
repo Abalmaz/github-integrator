@@ -2,7 +2,6 @@ import unittest
 
 from flask_script import Manager
 from flask_migrate import MigrateCommand
-from github_integration import models
 
 
 from github_integration import create_app, db
@@ -18,6 +17,7 @@ manager.add_command('db', MigrateCommand)
 def create_database():
     """Create all database tables."""
     db.create_all()
+
 
 @manager.command
 def test():
