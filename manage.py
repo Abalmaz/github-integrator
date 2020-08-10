@@ -6,7 +6,6 @@ from flask_migrate import MigrateCommand
 
 from github_integration import create_app, db
 
-
 manager = Manager(create_app)
 
 manager.add_option('-c', '--config', dest='config', required=False)

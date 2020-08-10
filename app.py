@@ -1,7 +1,7 @@
 from flask_swagger_ui import get_swaggerui_blueprint
 
 from github_integration import create_app
-from github_integration.auth.routes import auth
+from github_integration.auth.views import auth
 
 app = create_app()
 

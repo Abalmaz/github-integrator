@@ -1,6 +1,8 @@
 import requests
 from flask import abort, Response
 
+from github_integration import encryption_type
+
 
 class GitHubError(Exception):
     """Raised if a request fails to the GitHub API."""
@@ -68,3 +70,15 @@ def get_github_user(user_token: str) -> Response:
 
     if is_json_response(response):
         return response.json()
+
+
+def encrypt_personal_token(personal_token: str) -> str:
+    return encryption_type.encrypt(
+        personal_token.encode('utf-8')
+    ).decode('utf-8', 'ignore')
+
+
+def decode_personal_token(personal_token: str) -> str:
+    return encryption_type.decrypt(
+        personal_token.encode('utf-8')
+    ).decode('utf-8', 'ignore')

@@ -1,7 +1,7 @@
 import unittest
 
 from github_integration import db
-from github_integration.models import User
+from github_integration.auth.models import User
 from tests.base import BaseTestCase
 
 
