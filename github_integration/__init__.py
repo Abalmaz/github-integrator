@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -58,7 +60,6 @@ def get_config_obj(config):
     :return: Config object for a Flask app.
     """
 
-    from config import get_val
     config_mapper = {
         "prod": "config.ProductionConfig",
         "dev": "config.DevelopmentConfig",
@@ -67,7 +68,7 @@ def get_config_obj(config):
 
     if not config:
         try:
-            config = get_val("APP_SETTINGS")
+            config = os.environ.get("APP_SETTINGS")
         except KeyError as e:
             raise RuntimeError(
                 "APP_SETTINGS is not defined in the settings") from e

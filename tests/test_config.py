@@ -1,10 +1,10 @@
+import os
 import unittest
 
 from flask import current_app
 from flask_testing import TestCase
 
 from app import app
-from config import get_val
 
 
 class TestDevelopmentConfig(TestCase):
@@ -17,7 +17,7 @@ class TestDevelopmentConfig(TestCase):
         self.assertTrue(app.config['DEBUG'] is True)
         self.assertFalse(current_app is None)
         self.assertTrue(
-            app.config['SQLALCHEMY_DATABASE_URI'] == get_val("SQL_DATABASE_URI")
+            app.config['SQLALCHEMY_DATABASE_URI'] == os.environ.get("SQL_DATABASE_URI")
         )
 
 
@@ -30,7 +30,7 @@ class TestTestingConfig(TestCase):
         self.assertFalse(app.config['SECRET_KEY'] is 'my_precious')
         self.assertTrue(app.config['DEBUG'])
         self.assertTrue(
-            app.config['SQLALCHEMY_DATABASE_URI'] == get_val("SQL_TEST_DATABASE_URI")
+            app.config['SQLALCHEMY_DATABASE_URI'] == os.environ.get("SQL_TEST_DATABASE_URI")
         )
 
 
