@@ -15,7 +15,8 @@ class User(db.Model):
                  github_id=None,
                  github_login=None):
         self.github_access_token = encrypt_personal_token(
-            github_access_token)
+            github_access_token
+        )
         self.github_id = github_id
         self.github_login = github_login
 

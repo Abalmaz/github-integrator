@@ -10,7 +10,7 @@ class GitHubError(Exception):
             message = self.response.json()['message']
         except Exception:
             message = None
-        return "%s: %s" % (self.response.status_code, message)
+        return f'{self.response.status_code} {message}'
 
     @property
     def response(self):
@@ -29,11 +29,13 @@ def is_json_response(response):
     )
 
 
-def is_set_includes_all_from_another(first_set, second_set):
+def is_set_includes_all_from_another(first_set: set,
+                                     second_set: set
+                                     ) -> bool:
     return False if second_set - first_set else True
 
 
-def is_valid_github_token(personal_token):
+def is_valid_github_token(personal_token: str) -> bool:
     url = 'https://api.github.com'
     headers = {
         'Content-Type': "application/json",
@@ -53,7 +55,7 @@ def is_valid_github_token(personal_token):
     return False
 
 
-def get_github_user(user_token):
+def get_github_user(user_token: str) -> Response:
     url = 'https://api.github.com/user'
     headers = {
         'Content-Type': "application/json",
