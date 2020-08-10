@@ -1,4 +1,5 @@
-from github_integration import db, encryption_type
+from github_integration import db
+from github_integration.utils import encrypt_personal_token
 
 
 class User(db.Model):
@@ -13,18 +14,11 @@ class User(db.Model):
     def __init__(self, github_access_token,
                  github_id=None,
                  github_login=None):
-        self.github_access_token = encryption_type.encrypt(
-            github_access_token.encode('ascii')).decode('ascii')
+        self.github_access_token = encrypt_personal_token(
+            github_access_token)
         self.github_id = github_id
         self.github_login = github_login
 
     def save(self):
         db.session.add(self)
         db.session.commit()
-
-
-    @staticmethod
-    def decode_personal_token(access_token):
-        return encryption_type.decrypt(
-            access_token.encode('ascii')
-        ).decode('ascii')
