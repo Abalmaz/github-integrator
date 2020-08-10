@@ -16,3 +16,4 @@ export PROJECT_PATH=os.environ["PROJECT_PATH"]
 export MIGRATE_FOLDER=${PROJECT_PATH}/migrations
 export GITHUB_CLIENT_ID="Iv1.4d14e3790ab2274c"
 export GITHUB_CLIENT_SECRET="c7f8f88ae9e5461ac7021d7d13bf64aba07dfa5e"
+export FERNET_KEY='uWowc-GJKzppcK1D0KRCBanl11fc03m1PK63kR3bnnc='

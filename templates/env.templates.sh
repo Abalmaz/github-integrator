@@ -22,4 +22,5 @@ export APP_SETTINGS="dev"
 export PROJECT_PATH=os.environ["PROJECT_PATH"]
 export MIGRATE_FOLDER=os.path.join(PROJECT_PATH, "migrations")
 export GITHUB_CLIENT_ID=""
-export GITHUB_CLIENT_SECRET="
+export GITHUB_CLIENT_SECRET=""
+export FERNET_KEY=b''
