@@ -35,7 +35,7 @@ def is_json_response(response):
 def is_set_includes_all_from_another(first_set: set,
                                      second_set: set
                                      ) -> bool:
-    return False if second_set - first_set else True
+    return False if first_set - second_set else True
 
 
 def is_valid_github_token(personal_token: str) -> bool:
@@ -75,10 +75,10 @@ def get_github_user(user_token: str) -> Response:
 def encrypt_personal_token(personal_token: str) -> str:
     return encryption_type.encrypt(
         personal_token.encode()
-    )
+    ).decode()
 
 
 def decode_personal_token(personal_token: str) -> str:
     return encryption_type.decrypt(
-        personal_token
+        personal_token.encode()
     ).decode()
