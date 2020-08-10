@@ -100,3 +100,4 @@ fabfile.py
 .git
 dump\.rdb
 *.retry
+env.sh
