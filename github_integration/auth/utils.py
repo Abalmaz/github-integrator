@@ -1,5 +1,4 @@
 import requests
-import base64
 from flask import abort, Response
 
 from github_integration.auth.constance import REQUIRED_SCOPES
@@ -27,7 +26,8 @@ def is_valid_response(response):
 
 def is_json_response(response):
     content_type = response.headers.get('Content-Type', '')
-    return content_type == 'application/json' or content_type.startswith('application/json;')
+    return content_type == 'application/json' \
+           or content_type.startswith('application/json;')
 
 
 def is_set_includes_all_from_another(first_set, second_set):

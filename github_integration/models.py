@@ -14,7 +14,6 @@ class User(db.Model):
         self.github_access_token = encryption_type.encrypt(github_access_token.encode('ascii')).decode('ascii'),
         self.github_id = github_id,
         self.github_login = github_login
-        print(self.github_access_token)
 
     def save(self):
         db.session.add(self)

@@ -1,4 +1,4 @@
-from flask import render_template, request, Blueprint, jsonify, redirect, url_for, g
+from flask import request, Blueprint, jsonify, redirect, url_for, g
 
 from github_integration import github, db
 from github_integration.auth.utils import is_valid_github_token, get_github_user
@@ -61,6 +61,6 @@ def logout():
     return redirect(url_for('/oauth'))
 
 
-@auth.route('/user')
-def user():
-    return jsonify(github.get('/user'))
+# @auth.route('/user')
+# def user():
+#     return jsonify(github.get('/user'))
