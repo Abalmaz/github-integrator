@@ -3,7 +3,7 @@ import unittest
 from src import db
 from src.auth.models import GitHubUser
 from src.auth.utils import decode_personal_token
-from tests.base import BaseTestCase
+from src.tests.base import BaseTestCase
 
 
 class TestUserModel(BaseTestCase):

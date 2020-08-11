@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch, Mock
 
-from tests.base import BaseTestCase
+from src.tests.base import BaseTestCase
 
 
 class TestAuthBlueprint(BaseTestCase):
