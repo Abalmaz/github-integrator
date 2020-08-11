@@ -27,4 +27,4 @@ This should be done automatically for you if you run the setup script. But basic
 
 ### Environment variables
 
-Before you start reading the paragraph, please, have a look at [secrets.templates.py] and [env.templates.sh] (templates/) folder.
+Before you start reading the paragraph, please, have a look at [env.templates.sh] (.deploy/) folder.
