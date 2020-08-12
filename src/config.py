@@ -1,8 +1,12 @@
 import os
-basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-class Config(object):
+class Config:
+    """
+    Contains a different settings to using separate
+    configurations for the production server,
+    development and testing
+    """
     STAGE = False
     TESTING = False
     CSRF_ENABLED = True
@@ -17,16 +21,25 @@ class Config(object):
 
 
 class DevelopmentConfig(Config):
+    """
+    Settings to using for the development server
+    """
     DEVELOPMENT = True
     DEBUG = True
 
 
 class TestingConfig(Config):
+    """
+    Settings to using for the tests
+    """
     SQLALCHEMY_DATABASE_URI = os.environ.get("SQL_TEST_DATABASE_URI")
     TESTING = True
     DEBUG = True
 
 
 class ProductionConfig(Config):
+    """
+    Settings to using for the production server
+    """
     DEBUG = False
     TESTING = False

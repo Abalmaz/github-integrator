@@ -21,9 +21,10 @@ class GitHubUser(db.Model):
     github_login = db.Column(db.String(255))
     admin = db.Column(db.Boolean, nullable=False, default=False)
 
-    def __init__(self, github_access_token,
-                 github_id=None,
-                 github_login=None):
+    def __init__(self,
+                 github_access_token: str,
+                 github_id: int = None,
+                 github_login: str = None) -> None:
         self.github_access_token = encrypt_personal_token(
             github_access_token
         )

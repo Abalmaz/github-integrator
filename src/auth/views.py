@@ -1,5 +1,5 @@
-from flask import request, make_response, jsonify, Blueprint, \
-    redirect, url_for, g
+from flask import request, jsonify, Blueprint, \
+    redirect, url_for, g, Response
 from flask.views import MethodView
 
 from src import db, github
@@ -17,7 +17,7 @@ class PersonalTokenAuth(MethodView):
     Connect with personal token to GitHub.
     If the user's github token is valid we authorized him.
     """
-    def post(self):
+    def post(self) -> Response:
         post_data = request.get_json()
         try:
             github_personal_token = post_data.get('personal_token')
@@ -26,9 +26,7 @@ class PersonalTokenAuth(MethodView):
                     'status': 'fail',
                     'message': 'Token is not valid'
                 }
-                return make_response(
-                    jsonify(response_object)
-                ), 500
+                return jsonify(response_object)
             github_user = get_github_user(github_personal_token)
             return redirect(
                 url_for('auth.authorized',
@@ -41,9 +39,7 @@ class PersonalTokenAuth(MethodView):
                 'status': 'fail',
                 'message': 'Try again'
             }
-            return make_response(
-                jsonify(response_object)
-            ), 500
+            return jsonify(response_object)
 
 
 class GitHubAppAuth(MethodView):
@@ -51,7 +47,7 @@ class GitHubAppAuth(MethodView):
     View allows you authenticate your users via
     GitHub App using OAuth protocol.
     """
-    def get(self):
+    def get(self) -> Response:
         github.authorize(scope=list(REQUIRED_SCOPES))
         return github.authorize()
 
@@ -60,12 +56,17 @@ class Authorized(MethodView):
     """
     Authorized user.
     """
-    def get(self, access_token, github_user_id=None):
+    def get(self,
+            access_token: str,
+            github_user_id: int = None) -> Response:
         user = None
         github_token = request.args.get('access_token')
         github_user_id = request.args.get('github_user_id')
         if github_token is None:
-            return 'Token is not define', 200
+            return jsonify({
+                            'status': 'fail',
+                            'message': 'Token is not define'
+            })
         if github_user_id:
             user = GitHubUser.query.filter_by(
                 github_id=github_user_id
@@ -84,11 +85,14 @@ class Authorized(MethodView):
                 'status': 'success',
                 'message': 'Successfully authorized user.'
             }
-            return make_response(
-                jsonify(response_object)
-            ), 201
+            return jsonify(response_object)
 
-        return "GitHub user didn't find"
+        response_object = {
+            "status": "fail",
+            "message": "GitHub user didn't find"
+        }
+
+        return jsonify(response_object)
 
 
 # define the API resources
