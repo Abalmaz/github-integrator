@@ -1,8 +1,6 @@
 import os
 
 from flask import Flask
-from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
 from flask_github import GitHub
 
 from cryptography.fernet import Fernet
@@ -10,11 +8,6 @@ from cryptography.fernet import Fernet
 
 key = os.environ.get("SECRET_KEY")
 encryption_type = Fernet(key.encode())
-
-db = SQLAlchemy()
-
-# The migrate handler
-migrate = Migrate()
 
 github = GitHub()
 
@@ -26,9 +19,6 @@ def create_app(config=None):
     # Create the config from the config object.
     conf_obj = get_config_obj(config)
     app.config.from_object(conf_obj)
-
-    db.init_app(app)
-    migrate.init_app(app, db, directory=app.config["MIGRATE_FOLDER"])
     github.init_app(app)
 
     return app

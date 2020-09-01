@@ -10,8 +10,8 @@ externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
 servers:
-  - url: 'https://events-api-nqc53wwloq-ez.a.run.app/'
-  - url: 'http://events-api-nqc53wwloq-ez.a.run.app/'
+  - url: 'https://github-connection-nqc53wwloq-ez.a.run.app/'
+  - url: 'http://github-connection-nqc53wwloq-ez.a.run.app/'
 tags:
   - name: oauth
     description: Everything related to OAUth
@@ -63,22 +63,3 @@ paths:
                   personal_token:
                     type: string
                     example: f902b0fc892b3c0b1ae4aaab45b8d32f
-        '401':
-          $ref: '#/components/responses/UnauthorizedResponse'
-components:
-  responses:
-    UnauthorizedResponse:
-      description: Token authentication failed
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              detail:
-                type: string
-                example: authentication failure detailed info
-  securitySchemes:
-    Token:
-      type: apiKey
-      in: header
-      name: Authorization

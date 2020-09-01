@@ -32,7 +32,8 @@ def is_valid_response(response: Response) -> bool:
 
 def is_json_response(response: Response) -> bool:
     content_type = response.headers.get('Content-Type', '')
-    return content_type == 'application/json' or content_type.startswith(
+    return content_type == 'application/json' \
+           or content_type.startswith(
         'application/json;'
     )
 
@@ -59,6 +60,7 @@ def is_valid_github_token(personal_token: str) -> bool:
     }
     response = requests.request("GET", url, headers=headers)
     if is_valid_response(response):
+
         scopes = response.headers.get('X-OAuth-Scopes')
         user_scopes = set(scopes.split(', '))
         if is_set_includes_all_from_another(user_scopes,
@@ -76,13 +78,18 @@ def get_github_user(user_token: str) -> Response:
         'Content-Type': "application/json",
         'Authorization': "Bearer " + user_token
     }
-    response = requests.request("GET", url, headers=headers)
+    github_user = requests.request("GET", url, headers=headers)
+    github_email = requests.request("GET", f'{url}/emails',
+                                    headers=headers)
 
-    if not is_valid_response(response):
-        raise GitHubError(response)
+    result = github_user.json()
+    result['email'] = github_email.json()[0]['email']
 
-    if is_json_response(response):
-        return response.json()
+    if not is_valid_response(github_user):
+        raise GitHubError(github_user)
+
+    if is_json_response(github_user):
+        return result
 
 
 def encrypt_personal_token(personal_token: str) -> str:

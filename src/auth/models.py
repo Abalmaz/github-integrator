@@ -1,8 +1,10 @@
-from src import db
+from sqlalchemy import Column, Integer, String, Boolean
+
 from src.auth.utils import encrypt_personal_token
+from src.database import Base, db_session
 
 
-class GitHubUser(db.Model):
+class GitHubUser(Base):
     """
         The user table.
         Attributes:
@@ -16,12 +18,12 @@ class GitHubUser(db.Model):
         """
     __tablename__ = 'github_users'
 
-    id = db.Column(db.Integer, primary_key=True)
-    github_access_token = db.Column(db.String(300))
-    github_id = db.Column(db.Integer)
-    github_login = db.Column(db.String(255))
-    github_email = db.Column(db.String(100))
-    admin = db.Column(db.Boolean, nullable=False, default=False)
+    id = Column(Integer, primary_key=True)
+    github_access_token = Column(String(300))
+    github_id = Column(Integer)
+    github_login = Column(String(255))
+    github_email = Column(String(100))
+    admin = Column(Boolean, nullable=False, default=False)
 
     def __init__(self,
                  github_access_token: str,
@@ -36,5 +38,5 @@ class GitHubUser(db.Model):
         self.github_email = github_email
 
     def save(self):
-        db.session.add(self)
-        db.session.commit()
+        db_session.add(self)
+        db_session.commit()
